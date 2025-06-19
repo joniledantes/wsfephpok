@@ -1,0 +1,21 @@
+# Dolibarr language file - es_ES - wsfephp
+CHARSET=UTF-8
+# Module
+Module1050002Name=wsfePHP
+Module1050002Desc=Factura Electronica Argentina
+# Admin
+Config=Configuracion
+Support=Soporte
+About=Acarca de
+# Config
+wsfePHPConfig=Configuracion Factura Electronica
+# Status
+ServerStatus=Estado Servidores
+Renewta=Renovar TA
+InvoiceInfo=Informacion de Comprobantes
+TypeInvoice=Tipo de Comprobante
+POS=Punto de Venta
+InvoiceNumber=Comprobante Numero
+Request=Solicitar
+DebugConsole=Consola de Depuracion
+AFIPServerStatus=Estado Servidores AFIP

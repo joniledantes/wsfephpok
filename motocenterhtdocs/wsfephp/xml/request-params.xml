@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FECAESolicitar>
+  <Auth>
+    <Token>PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/Pgo8c3NvIHZlcnNpb249IjIuMCI+CiAgICA8aWQgc3JjPSJDTj13c2FhLCBPPUFGSVAsIEM9QVIsIFNFUklBTE5VTUJFUj1DVUlUIDMzNjkzNDUwMjM5IiBkc3Q9IkNOPXdzZmUsIE89QUZJUCwgQz1BUiIgdW5pcXVlX2lkPSIxNDMzNjYwMDAiIGdlbl90aW1lPSIxNzM4MjQyMDE3IiBleHBfdGltZT0iMTczODI4NTI3NyIvPgogICAgPG9wZXJhdGlvbiB0eXBlPSJsb2dpbiIgdmFsdWU9ImdyYW50ZWQiPgogICAgICAgIDxsb2dpbiBlbnRpdHk9IjMzNjkzNDUwMjM5IiBzZXJ2aWNlPSJ3c2ZlIiB1aWQ9IlNFUklBTE5VTUJFUj1DVUlUIDMwNzE2MjI3NTY4LCBDTj12aWF3ZWJlcnAiIGF1dGhtZXRob2Q9ImNtcyIgcmVnbWV0aG9kPSIyMiI+CiAgICAgICAgICAgIDxyZWxhdGlvbnM+CiAgICAgICAgICAgICAgICA8cmVsYXRpb24ga2V5PSIzMDcxNjIyNzU2OCIgcmVsdHlwZT0iNCIvPgogICAgICAgICAgICA8L3JlbGF0aW9ucz4KICAgICAgICA8L2xvZ2luPgogICAgPC9vcGVyYXRpb24+Cjwvc3NvPgo=</Token>
+    <Sign>YjXiRBKqwsvZUPlItyfSEAzAqrF4iRpYVtX5ipgnby6MPUBPX/L5fVpTntccsPkYFqXAYZrxtnA9F0Jyx/r8u5A2ZXAmhVFgBkKR55tuQpBkhpP7rqUesilWU893/JqP9jD7rG4SDV+Oct9loQPdyawYPXZCEokKdYgxyjJh9v4=</Sign>
+    <Cuit>30716227568</Cuit>
+  </Auth>
+  <FeCAEReq>
+    <FeCabReq>
+      <CantReg>1</CantReg>
+      <PtoVta>2</PtoVta>
+      <CbteTipo>6</CbteTipo>
+    </FeCabReq>
+    <FeDetReq>
+      <FECAEDetRequest>
+        <Concepto>1</Concepto>
+        <DocTipo>99</DocTipo>
+        <DocNro>0</DocNro>
+        <CbteDesde>7805</CbteDesde>
+        <CbteHasta>7805</CbteHasta>
+        <CbteFch>20250130</CbteFch>
+        <ImpNeto>44628.1</ImpNeto>
+        <ImpTotConc>0</ImpTotConc>
+        <ImpIVA>9371.9</ImpIVA>
+        <ImpTrib>0</ImpTrib>
+        <ImpOpEx>0</ImpOpEx>
+        <ImpTotal>54000</ImpTotal>
+        <FchServDesde></FchServDesde>
+        <FchServHasta></FchServHasta>
+        <FchVtoPago></FchVtoPago>
+        <MonId>PES</MonId>
+        <MonCotiz>1</MonCotiz>
+        <Iva>
+          <AlicIva>
+            <Id>5</Id>
+            <BaseImp>44628.1</BaseImp>
+            <Importe>9371.9</Importe>
+          </AlicIva>
+        </Iva>
+        <CbtesAsoc></CbtesAsoc>
+      </FECAEDetRequest>
+    </FeDetReq>
+  </FeCAEReq>
+</FECAESolicitar>

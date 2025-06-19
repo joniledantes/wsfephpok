@@ -1,0 +1,231 @@
+-- ===================================================================
+-- Copyright (C) 2016 Catriel Rios <catriel_r@hotmail.com>
+--
+-- This program is free software; you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as published by
+-- the Free Software Foundation; either version 2 of the License, or
+-- (at your option) any later version.
+--
+-- This program is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU General Public License for more details.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with this program; if not, write to the Free Software
+-- Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+-- ===================================================================
+
+
+Instalación modulo Factura Electrónica Argentina PHP
+Para version 3.8 en adelante de Dolibarr
+
+
+1)	Copiar carpeta wsfephp  en el DOL_DOCUMENT_ROOT de dolibarr.
+2)	Mover desde: wsfephp/core/modules/facture/doc/pdf_fe.modules.php 
+                             A: DOL_DOCUMENT_ROOT/core/modules/facture/doc/pdf_fe.modules.php
+
+3)	Mover desde:  wsfephp/core/modules/facture/mod_facture_wsfe.php 
+                             A: DOL_DOCUMENT_ROOT/core/modules/facture/mod_facture_wsfe.php
+
+
+
+4)	Crear en Inicio->Configuración->Diccionarios: Tipo de Tercero
+
+Codigo	Etiqueta
+A       Inscripto
+B	      No Inscripto
+CF	    Consumidor Final
+EX	    Exento
+
+5)	Configurar en cada cliente la sección: Tipo cliente
+
+6)  En Inicio->Configuración->Modulos->Facturas y abonos
+    a)Activar numeracion "wsfe"
+    b)Configurar las siguentes mascaras:
+      000x para el punto de venta papel
+      F{t}-000x-{0000000}
+      ND{t}-000x-{0000000}
+      NC{t}-000x-{0000000}
+      F{t}-000x-{0000000} (no se usa para)
+      
+      x = es el numero del punto de venta del talonario "papel"
+      
+    c)Activar y aplicar por defecto el modelo "Factura Electronica"
+    
+
+    
+      
+7)	Activar el Modulo wsfephp
+
+8) En Admin de Inicio->Configuración->Modulos->wsfephp
+    Completar:
+              CUIT   (no aplica a v.2)
+              Nombre archivo .key
+              Nombre archivo .crt
+              Punto de venta
+              Modo Produccion/Homologacion
+              
+9) Modificar DOL_DOCUMENT_ROOT/compta/facture.php
+
+Depende de la version de dolibarr
+
+Aprox Linea 121
+//WSFE Permisos
+ if ($object->statut > 0 && $object->modelpdf=='fe') {   //agregar ExtraField en fatura llamado fe
+		 $conf->global->MAIN_USE_ADVANCED_PERMS = 1;
+		 $user->rights->facture->invoice_advance->unvalidate = 0;
+		 $user->rights->facture->supprimer = 0;
+		 $user->rights->facture->invoice_advance->unvalidate;
+	 } else {
+		 $user->rights->facture->invoice_advance->unvalidate = 1;
+		 $user->rights->facture->supprimer = 1;
+		 $user->rights->facture->invoice_advance->validate;
+	 }
+//FIN WSFE
+
+Aprox Linea 442
+			// WSFE
+			if ($object->modelpdf == 'fe' && $object->mode_reglement_code!="ECO")
+			{
+		 include_once DOL_DOCUMENT_ROOT . '/wsfephp/wsfe_doli.php';
+		    $result = wsfe_doli($db, $object, $langs, $conf, $user, $idwarehouse);
+
+		 }else{
+			$result = $object->validate($user, '', $idwarehouse);
+		 }
+		 //Fin WSFE
+
+10) Es caso de Monitributusta:
+    Inicio->Empresa/Institucion
+    Modificar
+    Seleccionar "Monotributista" en Forma Juridica
+    
+
+AFIP
+WSAA: https://wsaa.afip.gov.ar/ws/services/LoginCms?wsdl
+WSFEv1: https://servicios1.afip.gov.ar/wsfev1/service.asmx?WSDL
+
+ Nuevo en Version 2   
+ WSFE_FAC_PDF_PRINT_LABEL Imprime titulos en PDF
+ WSFE_FAC_PDF_PRINT_COPIES Copias de facturas
+ 
+
+MAIN_REMOVE_INSTALL_WARNING     1    remover info de instalacion
+INVOICE_CAN_ALWAYS_BE_EDITED      1    editar facturas
+INVOICE_ALLOW_FREE_REF    1     cambiar la referencia de una factura
+INVOICE_ALLOW_EXTERNAL_DOWNLOAD    1
+POS_ADDON       wsfe     mascara a usar de pos ???
+MAIN_USE_ADVANCED_PERMS     1 
+WSFE_FAC_PDF_PRINT_COPIES       3   numero copias factura
+WSFE_FAC_PDF_PRINT_LABEL Imprime titulos en PDF
+MAIN_INFO_SOCIETE_FECHA_INICIO     01/04/2018     fecha inicio afip
+MAIN_INFO_SOCIETE_COD_AFIP     71528344808535      codigo afip qr de comprobante cae ???? no deberia usarse
+MAIN_INFO_SOCIETE_PTOVTA      6     punto de venta para qr  afip
+MAIN_PDF_USE_LARGE_LOGO    1     logo pdf
+
+INVOICE_ALLOW_EXTERNAL_DOWNLOAD     1
+
+TAKEPOS_SHOW_PRODUCT_REFERENCE     1    codigos de productos en takepos
+
+
+
+
+
+
+----------------
+
+
+
+Dolibarr ERP 12: Configure your TakePOS for small retail
+Start your company
+Home -> Setup -> Company/Organization
+Tab Company
+    Name is mandatory
+    Country is mandatory
+    Sales Tax Management for small company choose "Sales tax is not used"
+Tab Opening hours
+    Monday - Sunday for example 7-12 13-16 means open from 7am, at 12pm, close at 16pm.
+
+Enabling module Financial Modules (Accounting/Treasury) -> Banks & Cash
+After enable, from Top Bar go to Banks | Cash
+Create New financial account
+    Ref.: cash0001
+    Bank or cash label: Cash
+    Account type: Cash Account
+    Currency: Indonesia
+    Status: Open
+    Account country: Indonesia
+    Initial balance: 5000000
+
+Enabling module Customer Relationship Management (CRM) -> Third Parties
+After enable, from Top Bar go to Third Parties.
+Create Third-party (New Customer)
+    Third-party name: "Unknown 3rd party"
+    Prospect / Customer: "Customer"
+Create Contacts/Addresses
+    Last name / Label: "Unknown Customer"
+    Third-party: "Unknown 3rd party"
+
+Enabling module
+    Product Management (PM) -> Prodcuts
+    Product Management (PM) -> Stocks
+    Multi-modules tools -> Tags/categories
+After enable, from Top Bar go to Products.
+New warehouse
+    Ref.: local
+    Short name location: local001
+New product
+    Ref.: Isamu_Lacquer_1_4kg
+    Label: Isamu Lacquer 1/4kg
+    Status (Sell): For sale
+    Status (Purchase): For purchase
+    Default warehouse: local
+    Nature of product (material/finished):  Manufactured product
+    Selling price: 25000
+    Min. sell price: 23000
+    Tag/categories: dempul besi (modify from Product -> Tags/Category)
+and save.
+List or Stocks -> choose Isamu_Lacquer_1_4kg -> tab Stock -> Correct Stock
+    Warehouse: local
+    Number of untis: 50
+    Unit Purchase price: 21000
+and save.
+
+TakePOS
+Enabling module Websites and other frontal application -> TakePOS
+After enable, click icon setting.
+In Parameters, Enabling Simple
+Enable:
+    Group VAT by rate in tickets|receipts
+    Group same products lines
+    Use payment icon on numpad
+    Direct cash payment button
+    Control cash box at opening pos
+and Save.
+in tab Terminal 1
+    Default generic third party to use for sales: "Unknown 3rd Party"
+    Default account to use to receive cash payments: Cash
+and Save.
+
+To start TakePOS, from Top Bar go to POS -> Start and Save
+    
+    
+
+
+    ------
+
+    implementacion:
+
+
+impresion online
+
+https://prinsify.pp.ua/
+instalar en pc que tiene la impresora/s
+https://play.google.com/store/apps/details?id=com.solvaig.printservice
+app celular
+
+corroborar firewall y defender de windows en los puertos que usa
+router
+compartir impresora en red
+configurar page size en impresora para termica segun corresponda

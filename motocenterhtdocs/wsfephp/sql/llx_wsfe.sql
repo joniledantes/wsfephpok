@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS `llx_wsfe` (
+  `factura_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cae` text,
+  `caevto` text,
+  `puntodeventa` int(11) DEFAULT NULL,
+  `cbtnro` int(11) DEFAULT NULL,
+  `concepto` int(11) DEFAULT NULL,
+  `obs` text,
+  `fk_facture` varchar(50) DEFAULT NULL,
+  `xmlrequest` text,
+  `xmlresponse` text,
+  `divisa` varchar(4) DEFAULT NULL,
+  `version` varchar(10) DEFAULT NULL,
+  `entity_id` int(11) DEFAULT NULL,
+  `cbttipo` int(11) DEFAULT NULL,
+  `cuitemisor` text,
+  `errc` text,
+  `errm` text,
+  PRIMARY KEY (`factura_id`)
+)ENGINE=InnoDB ;
